@@ -1,0 +1,50 @@
+# Copyright (c) 2022 Adithya Krishna
+# See LICENSE.md for license information.
+
+name: Deploy React Flow Demo
+
+on:
+  push:
+    # Branch which is used to check where the code is pushed to
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  Deploy:
+    concurrency: ci-${{ github.ref }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # To get npm cache path
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+
+      # To cache npm dependencies
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # To set repo URL to avoid errors like https://github.com/adithyaakrishna/adithyaakrishna.github.io/issues/83
+      - name: Set URL 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          
+      # Checks npm cache and use it for dependencies install
+      - name: Check Cache 
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      # To deploy website to GH Pages
+      - name: Deploy to GH Pages Branch (main) 
+        run: npm run deploy
