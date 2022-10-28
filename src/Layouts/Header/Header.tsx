@@ -13,7 +13,7 @@ export const Header = () => {
     <Box sx={{ flexGrow: 1 }} className="header">
       <AppBar className='header-container' position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1}}>
         <Toolbar className="header">
-          <BasicAlert iconVisible={false} alertText={"Cannot save flow"} severity="error" />
+          <BasicAlert iconVisible={false} alertText={"Cannot save flow"} variant="filled" severity="error" />
           <BasicButton className="save-button" color='inherit' variant="outlined" buttonText='Save Changes' />
         </Toolbar>
       </AppBar>
