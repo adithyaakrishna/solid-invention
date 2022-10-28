@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 import './messageNode.min.css';
 import Whatsapp from '../../../Assets/Icons/WA.png';

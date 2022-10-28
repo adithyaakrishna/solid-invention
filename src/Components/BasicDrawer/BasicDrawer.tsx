@@ -16,7 +16,7 @@ interface DrawerProps {
 }
 
 export const BasicDrawer = (props: DrawerProps) => {
-  const onDragStart = (event: any, nodeType: any) => {
+  const onDragStart = (event: React.DragEvent<HTMLDivElement>, nodeType: string) => {
     event.dataTransfer.setData('application/reactflow', nodeType);
     event.dataTransfer.effectAllowed = 'move';
   };
