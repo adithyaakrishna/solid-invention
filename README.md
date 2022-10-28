@@ -1,5 +1,9 @@
 # React Flow Demo
 
+Uses `"reactflow": "^11.1.2"`
+
+Deployed on [Preview](https://adithyaakrishna.github.io/solid-invention)
+
 
 Project Structure
 
